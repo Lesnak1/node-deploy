@@ -3,6 +3,9 @@
 # Same shape as testnet/rpc, pointed at the mainnet image and chain spec: the
 # node behind Caddy for TLS, `--rpc-methods Safe` because the endpoint is
 # public, archive pruning so historical queries answer.
+# Caddy shares the host network and reaches the node over loopback; keep
+# --rpc-external absent so the RPC port cannot bypass Caddy if the firewall
+# is misconfigured.
 #
 # The image tag differs on purpose (`mainnet-latest`): a stable `vX.Y.Z` tag
 # publishes it, a prerelease never does, so an rc can never reach mainnet by
@@ -27,7 +30,6 @@ services:
       ${TELEMETRY_URL---telemetry-url "wss://telemetry.orbinum.io/submit/ 0"}
       --rpc-port ${RPC_PORT:-9944}
       --rpc-cors all
-      --rpc-external
       --rpc-methods Safe
       --rpc-max-connections 5000
       --state-pruning archive

@@ -14,3 +14,7 @@ origin.key
 # Chain-spec generation intermediates
 **/spec-plain.json
 **/spec-customized.json
+
+# Python test artifacts
+__pycache__/
+*.py[cod]

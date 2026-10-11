@@ -127,7 +127,9 @@ cp /path/to/origin.key origin.key
 docker compose up -d       # builds the Caddy image from ../../common on first run
 ```
 
-Caddy proxies HTTPS/WSS on your domain to the node on `localhost:9944`.
+Caddy proxies HTTPS/WSS on your domain to the node on `localhost:9944`. The
+node RPC binds to loopback (`--rpc-external` is intentionally omitted), leaving
+Caddy as the only network-facing RPC entry point.
 
 ### TLS
 

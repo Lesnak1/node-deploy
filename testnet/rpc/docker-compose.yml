@@ -3,7 +3,9 @@
 # What the public endpoint (rpc-1, rpc-2, …) serves: wallets, the explorer and
 # anyone querying the chain. Caddy terminates HTTPS/WSS in front of it with a
 # Cloudflare Origin Certificate, so the node itself speaks plain HTTP on
-# RPC_PORT and is never exposed directly.
+# RPC_PORT and is never exposed directly. Keep --rpc-external absent: Caddy
+# shares the host network and reaches the node over loopback, so firewall
+# mistakes cannot expose an RPC endpoint that bypasses Caddy's rate limits.
 #
 # `--rpc-methods Safe`: a public endpoint must not offer author_rotateKeys,
 # offchain storage or the other unsafe namespaces. Archive on both axes
@@ -32,7 +34,6 @@ services:
       ${TELEMETRY_URL---telemetry-url "wss://telemetry.orbinum.io/submit/ 0"}
       --rpc-port ${RPC_PORT:-9944}
       --rpc-cors all
-      --rpc-external
       --rpc-methods Safe
       --rpc-max-connections 5000
       --in-peers 64
